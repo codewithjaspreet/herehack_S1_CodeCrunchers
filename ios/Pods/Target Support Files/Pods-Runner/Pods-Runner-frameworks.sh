@@ -177,14 +177,17 @@ code_sign_if_enabled() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/here_sdk/here_sdk.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/path_provider_ios/path_provider_ios.framework"
   install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/here_sdk/heresdk.framework"
 fi
 if [[ "$CONFIGURATION" == "Profile" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/here_sdk/here_sdk.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/path_provider_ios/path_provider_ios.framework"
   install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/here_sdk/heresdk.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/here_sdk/here_sdk.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/path_provider_ios/path_provider_ios.framework"
   install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/here_sdk/heresdk.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then

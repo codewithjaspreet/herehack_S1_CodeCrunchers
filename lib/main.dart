@@ -117,7 +117,7 @@ class _MyAppState extends State<MyApp> {
             builder: (BuildContext context, ScrollController scrollController) {
               return SingleChildScrollView(
                 controller: scrollController,
-                child: BottomOpener(),
+                child: BottomOpener(_searchExample),
               );
             },
           ),

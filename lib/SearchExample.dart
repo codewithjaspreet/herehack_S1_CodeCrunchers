@@ -284,7 +284,7 @@ class SearchExample {
 
     SearchOptions searchOptions = SearchOptions.withDefaults();
     searchOptions.languageCode = LanguageCode.deDe;
-    searchOptions.maxItems = 30;
+    searchOptions.maxItems = 50;
 
     _searchEngine.searchByAddress(query, searchOptions,
         (SearchError? searchError, List<Place>? list) async {

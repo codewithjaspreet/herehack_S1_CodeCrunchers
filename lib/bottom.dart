@@ -1,13 +1,12 @@
-import 'package:chips_choice/chips_choice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:multi_select_flutter/bottom_sheet/multi_select_bottom_sheet.dart';
+import 'package:search_app/SearchExample.dart';
 
 class BottomOpener extends StatelessWidget {
-  BottomOpener({Key? key}) : super(key: key);
+  BottomOpener(this.searchExample, {Key? key}) : super(key: key);
   var _selectedActivities = [];
-
+  SearchExample? searchExample;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -36,15 +35,15 @@ class BottomOpener extends StatelessWidget {
             SizedBox(
               height: 10.h,
             ),
-            MultiSelectActivities()
+            MultiSelectActivities(searchExample)
           ],
         ));
   }
 }
 
 class MultiSelectActivities extends StatefulWidget {
-  MultiSelectActivities({Key? key}) : super(key: key);
-
+  MultiSelectActivities(this.searchExample, {Key? key}) : super(key: key);
+  SearchExample? searchExample;
   @override
   State<MultiSelectActivities> createState() => _MultiSelectActivitiesState();
 }
@@ -68,7 +67,6 @@ class _MultiSelectActivitiesState extends State<MultiSelectActivities> {
     {'icon': Icons.hotel, 'name': 'Hotel'},
     {'icon': Icons.park, 'name': 'Family Outing'},
     {'icon': Icons.sell_rounded, 'name': 'Shopping'},
-
   ];
 
   @override
@@ -87,6 +85,8 @@ class _MultiSelectActivitiesState extends State<MultiSelectActivities> {
                   selected.add(single_activity['name']);
                 });
               }
+              print("DONEE");
+              widget.searchExample?.searchExample(selected.last);
             },
             child: Activity(
               name: single_activity['name'],
@@ -115,7 +115,7 @@ class Activity extends StatelessWidget {
     return Column(
       children: [
         Container(
-          margin: EdgeInsets.symmetric(horizontal: 11.w,vertical: 6.h),
+          margin: EdgeInsets.symmetric(horizontal: 11.w, vertical: 6.h),
           child: ClipOval(
             child: Container(
                 width: 60.w,
