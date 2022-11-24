@@ -35,6 +35,8 @@ dependencies:
     path: plugins/here_sdk
   get: ^4.6.5
   flutter_screenutil: ^5.6.0
+  modal_bottom_sheet: ^2.1.2
+  multi_select_flutter: ^4.1.2
 
 dev_dependencies:
   flutter_test:

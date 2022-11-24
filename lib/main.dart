@@ -5,6 +5,7 @@ import 'package:here_sdk/core.dart';
 import 'package:here_sdk/core.engine.dart';
 import 'package:here_sdk/core.errors.dart';
 import 'package:here_sdk/mapview.dart';
+import 'package:search_app/bottom.dart';
 import 'env.dart';
 import 'SearchExample.dart';
 
@@ -97,14 +98,29 @@ class _MyAppState extends State<MyApp> {
                   },
                 ),
               ),
+              
               // button('Search', _searchButtonClicked),
               // button('Geocoding', _geocodeAnAddressButtonClicked),
             ],
+          ),
+        
+        DraggableScrollableSheet(
+            initialChildSize: 0.30,
+            minChildSize: 0.15,
+            builder: (BuildContext context, ScrollController scrollController) {
+              return SingleChildScrollView(
+                controller: scrollController,
+                child: BottomOpener(),
+              );
+            },
           ),
         ],
       ),
     );
   }
+
+
+
 
   void _onMapCreated(HereMapController hereMapController) {
     hereMapController.mapScene.loadSceneForMapScheme(MapScheme.normalDay,
