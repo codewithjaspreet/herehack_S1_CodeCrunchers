@@ -52,6 +52,7 @@ void _initializeHERESDK() async {
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
+  var search = "";
 }
 
 class _MyAppState extends State<MyApp> {
@@ -72,6 +73,11 @@ class _MyAppState extends State<MyApp> {
                 // width: 34.w,
                 margin: EdgeInsets.only(left: 10.w, right: 10.w, top: 60.h),
                 child: TextField(
+                  onChanged: (value) {
+                    setState(() {
+                      widget.search = value;
+                    });
+                  },
                   textAlignVertical: TextAlignVertical.center,
                   scrollPadding: EdgeInsets.zero,
                   autocorrect: false,
@@ -94,17 +100,18 @@ class _MyAppState extends State<MyApp> {
                     ),
                   ),
                   onSubmitted: (value) {
-                    // _searchExample!.search(value);
+                  //  search_example = SearchExample( )
+                _searchExample?.searchExample(value);
+
                   },
                 ),
               ),
-              
+
               // button('Search', _searchButtonClicked),
               // button('Geocoding', _geocodeAnAddressButtonClicked),
             ],
           ),
-        
-        DraggableScrollableSheet(
+          DraggableScrollableSheet(
             initialChildSize: 0.30,
             minChildSize: 0.15,
             builder: (BuildContext context, ScrollController scrollController) {
@@ -118,9 +125,6 @@ class _MyAppState extends State<MyApp> {
       ),
     );
   }
-
-
-
 
   void _onMapCreated(HereMapController hereMapController) {
     hereMapController.mapScene.loadSceneForMapScheme(MapScheme.normalDay,

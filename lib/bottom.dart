@@ -1,5 +1,7 @@
+import 'package:chips_choice/chips_choice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:multi_select_flutter/bottom_sheet/multi_select_bottom_sheet.dart';
 
 class BottomOpener extends StatelessWidget {
@@ -31,6 +33,9 @@ class BottomOpener extends StatelessWidget {
                   color: Color(0xffD9D9D9),
                   borderRadius: BorderRadius.circular(8)),
             ),
+            SizedBox(
+              height: 10.h,
+            ),
             MultiSelectActivities()
           ],
         ));
@@ -38,50 +43,105 @@ class BottomOpener extends StatelessWidget {
 }
 
 class MultiSelectActivities extends StatefulWidget {
-  const MultiSelectActivities({
-    Key? key,
-  }) : super(key: key);
+  MultiSelectActivities({Key? key}) : super(key: key);
 
   @override
   State<MultiSelectActivities> createState() => _MultiSelectActivitiesState();
 }
 
 class _MultiSelectActivitiesState extends State<MultiSelectActivities> {
-  var selected = [];
+  List<String> selected = [];
+
+  List<Map<String, dynamic>> Activities = [
+    {
+      'icon': Icons.local_gas_station_rounded,
+      'name': 'Gas Station',
+    },
+    {
+      'icon': Icons.restaurant_outlined,
+      'name': 'Restraunt',
+      // 'value':
+    },
+    {'icon': Icons.local_hospital_outlined, 'name': 'Hospital'},
+    {'icon': Icons.attach_money_outlined, 'name': 'Atm'},
+    {'icon': Icons.wine_bar_rounded, 'name': 'Night Bar'},
+    {'icon': Icons.hotel, 'name': 'Hotel'},
+    {'icon': Icons.park, 'name': 'Family Outing'},
+    {'icon': Icons.sell_rounded, 'name': 'Shopping'},
+
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // width: 181.w,
-      child: Wrap(children: [
-        Actitvity()
-      ],),
+    return Wrap(
+      children: [
+        ...Activities.map((single_activity) {
+          return InkWell(
+            onTap: () {
+              if (selected.contains(single_activity['name'])) {
+                setState(() {
+                  selected.remove(single_activity['name']);
+                });
+              } else {
+                setState(() {
+                  selected.add(single_activity['name']);
+                });
+              }
+            },
+            child: Activity(
+              name: single_activity['name'],
+              icon: single_activity['icon'],
+              selected: selected.contains(single_activity['name']),
+            ),
+          );
+        }).toList(),
+      ],
     );
   }
 }
 
-class Actitvity extends StatelessWidget {
-  const Actitvity({
-    Key? key,
-
-  }) : super(key: key);
-
+class Activity extends StatelessWidget {
+  const Activity(
+      {Key? key,
+      required this.name,
+      required this.icon,
+      required this.selected})
+      : super(key: key);
+  final String name;
+  final IconData icon;
+  final bool selected;
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ClipOval(
-          child: Container(
-            color: Color(0xff3AA766),
-            padding: EdgeInsets.all(2),
-            child: ClipOval(child: Container(
-              color: Colors.white,
-              child: Icon(Icons.local_gas_station_rounded,size: 36.w,),
-width: 60.w,
-height: 60.h,
-            )),
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: 11.w,vertical: 6.h),
+          child: ClipOval(
+            child: Container(
+                width: 60.w,
+                height: 60.h,
+                padding: EdgeInsets.all(2),
+                color: Color(0xff3AA766),
+                child: ClipOval(
+                  child: Container(
+                    color: selected ? Color(0xff3AA766) : Colors.white,
+                    child: Icon(
+                      icon,
+                      size: 40,
+                      color: selected ? Colors.white : Color(0xff3AA766),
+                    ),
+                  ),
+                )),
           ),
         ),
-        Text("")
+        SizedBox(
+          height: 2.h,
+        ),
+        Text(name,
+            style: TextStyle(
+                fontFamily: GoogleFonts.openSans().fontFamily,
+                color: Color(0xff3AA766),
+                fontSize: 12.sp)),
       ],
     );
   }

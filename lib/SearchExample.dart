@@ -61,13 +61,13 @@ class SearchExample {
     _setTapGestureHandler();
     _setLongPressGestureHandler();
 
-    _showDialog("Note",
-        "Long press on map to get the address for that position using reverse geocoding.");
+    // _showDialog("Note",
+    //     "Long press on map to get the address for that position using reverse geocoding.");
   }
 
   Future<void> searchButtonClicked() async {
     // Search for "Pizza" and show the results on the map.
-    _searchExample();
+    searchExample("Pizza");
 
     // Search for auto suggestions and log the results to the console.
     _autoSuggestExample();
@@ -78,10 +78,40 @@ class SearchExample {
     _geocodeAnAddress();
   }
 
-  void _searchExample() {
-    String searchTerm = "Pizza";
+  void searchExample(String searchTerm) {
+    // String searchTerm = "Pizza";
     print("Searching in viewport for: " + searchTerm);
-    _searchInViewport(searchTerm);
+   _clearMap();
+
+    GeoBox viewportGeoBox = _getMapViewGeoBox();
+    TextQueryArea queryArea = TextQueryArea.withBox(viewportGeoBox);
+    TextQuery query = TextQuery.withArea(searchTerm, queryArea);
+
+    SearchOptions searchOptions = SearchOptions.withDefaults();
+    searchOptions.languageCode = LanguageCode.enUs;
+    searchOptions.maxItems = 30;
+
+    _searchEngine.searchByText(query, searchOptions,
+        (SearchError? searchError, List<Place>? list) async {
+      if (searchError != null) {
+        _showDialog("Search", "Error: " + searchError.toString());
+        return;
+      }
+
+      // If error is null, list is guaranteed to be not empty.
+      int listLength = list!.length;
+      _showDialog("Search for $searchTerm",
+          "Results: $listLength. Tap marker to see details.");
+
+      // Add new marker for each search result on map.
+      for (Place searchResult in list) {
+        Metadata metadata = Metadata();
+        metadata.setCustomValue(
+            "key_search_result", SearchResultMetadata(searchResult));
+        // Note: getGeoCoordinates() may return null only for Suggestions.
+        addPoiMapMarker(searchResult.geoCoordinates!, metadata);
+      }
+    });
   }
 
   void _geocodeAnAddress() {
@@ -179,37 +209,7 @@ class SearchExample {
   }
 
   Future<void> _searchInViewport(String queryString) async {
-    _clearMap();
-
-    GeoBox viewportGeoBox = _getMapViewGeoBox();
-    TextQueryArea queryArea = TextQueryArea.withBox(viewportGeoBox);
-    TextQuery query = TextQuery.withArea(queryString, queryArea);
-
-    SearchOptions searchOptions = SearchOptions.withDefaults();
-    searchOptions.languageCode = LanguageCode.enUs;
-    searchOptions.maxItems = 30;
-
-    _searchEngine.searchByText(query, searchOptions,
-        (SearchError? searchError, List<Place>? list) async {
-      if (searchError != null) {
-        _showDialog("Search", "Error: " + searchError.toString());
-        return;
-      }
-
-      // If error is null, list is guaranteed to be not empty.
-      int listLength = list!.length;
-      _showDialog("Search for $queryString",
-          "Results: $listLength. Tap marker to see details.");
-
-      // Add new marker for each search result on map.
-      for (Place searchResult in list) {
-        Metadata metadata = Metadata();
-        metadata.setCustomValue(
-            "key_search_result", SearchResultMetadata(searchResult));
-        // Note: getGeoCoordinates() may return null only for Suggestions.
-        addPoiMapMarker(searchResult.geoCoordinates!, metadata);
-      }
-    });
+   
   }
 
   Future<void> _autoSuggestExample() async {
