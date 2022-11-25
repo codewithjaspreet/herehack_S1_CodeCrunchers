@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/route_manager.dart';
 import 'package:here_sdk/core.dart';
 import 'package:here_sdk/core.engine.dart';
 import 'package:here_sdk/core.errors.dart';
 import 'package:here_sdk/mapview.dart';
-import 'package:search_app/bottom.dart';
+import 'package:search_app/widgets/bottom.dart';
 import 'env.dart';
-import 'SearchExample.dart';
+import 'Controller/SearchExample.dart';
 
 void main() {
   // Usually, you need to initialize the HERE SDK only once during the lifetime of an application.
@@ -52,10 +54,14 @@ void _initializeHERESDK() async {
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
+  var search = "";
 }
 
 class _MyAppState extends State<MyApp> {
   SearchExample? _searchExample;
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +78,11 @@ class _MyAppState extends State<MyApp> {
                 // width: 34.w,
                 margin: EdgeInsets.only(left: 10.w, right: 10.w, top: 60.h),
                 child: TextField(
+                  onChanged: (value) {
+                    setState(() {
+                      widget.search = value;
+                    });
+                  },
                   textAlignVertical: TextAlignVertical.center,
                   scrollPadding: EdgeInsets.zero,
                   autocorrect: false,
@@ -94,23 +105,24 @@ class _MyAppState extends State<MyApp> {
                     ),
                   ),
                   onSubmitted: (value) {
-                    // _searchExample!.search(value);
+                  //  search_example = SearchExample( )
+                _searchExample?.searchExample(value);
+
                   },
                 ),
               ),
-              
+
               // button('Search', _searchButtonClicked),
               // button('Geocoding', _geocodeAnAddressButtonClicked),
             ],
           ),
-        
-        DraggableScrollableSheet(
+          DraggableScrollableSheet(
             initialChildSize: 0.30,
             minChildSize: 0.15,
             builder: (BuildContext context, ScrollController scrollController) {
               return SingleChildScrollView(
                 controller: scrollController,
-                child: BottomOpener(),
+                child: BottomOpener(_searchExample),
               );
             },
           ),
@@ -118,9 +130,6 @@ class _MyAppState extends State<MyApp> {
       ),
     );
   }
-
-
-
 
   void _onMapCreated(HereMapController hereMapController) {
     hereMapController.mapScene.loadSceneForMapScheme(MapScheme.normalDay,

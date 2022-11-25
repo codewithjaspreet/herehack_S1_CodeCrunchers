@@ -37,6 +37,12 @@ dependencies:
   flutter_screenutil: ^5.6.0
   modal_bottom_sheet: ^2.1.2
   multi_select_flutter: ^4.1.2
+  chips_choice: ^3.0.0
+  google_fonts: ^3.0.1
+  geolocator: ^9.0.2
+  geocoding: ^2.0.5
+  flutter_dash: ^1.0.0
+  roundcheckbox: ^2.0.5
 
 dev_dependencies:
   flutter_test:

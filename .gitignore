@@ -1,2 +1,4 @@
 lib/env.dart
 plugins/here_sdk
+build
+.dart_tool
