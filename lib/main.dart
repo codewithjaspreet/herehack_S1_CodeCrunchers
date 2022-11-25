@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:get/route_manager.dart';
 import 'package:here_sdk/core.dart';
 import 'package:here_sdk/core.engine.dart';
