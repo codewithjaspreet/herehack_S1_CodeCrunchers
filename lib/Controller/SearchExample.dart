@@ -17,6 +17,7 @@
  * License-Filename: LICENSE
  */
 
+import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter/services.dart';
@@ -95,6 +96,7 @@ class SearchExample {
     // String searchTerm = "Pizza";
     print("Searching in viewport for: " + searchTerm);
     _clearMap();
+
 
     GeoBox viewportGeoBox = _getMapViewGeoBox();
     TextQueryArea queryArea = TextQueryArea.withBox(viewportGeoBox);
@@ -218,7 +220,9 @@ class SearchExample {
     });
   }
 
-  Future<void> _searchInViewport(String queryString) async {}
+  Future<void> _searchInViewport(String queryString) async {
+   
+  }
 
   Future<void> _autoSuggestExample() async {
     GeoCoordinates centerGeoCoordinates = _getMapViewCenter();

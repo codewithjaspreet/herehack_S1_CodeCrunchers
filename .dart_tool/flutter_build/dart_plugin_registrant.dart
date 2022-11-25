@@ -6,9 +6,13 @@
 // @dart = 2.18
 
 import 'dart:io'; // flutter_ignore: dart_io_import.
+<<<<<<< HEAD
 import 'package:geolocator_android/geolocator_android.dart';
 import 'package:path_provider_android/path_provider_android.dart';
 import 'package:geolocator_apple/geolocator_apple.dart';
+=======
+import 'package:path_provider_android/path_provider_android.dart';
+>>>>>>> 2965ed0c845df75c4bcafcc895d81dc2572afad1
 import 'package:path_provider_ios/path_provider_ios.dart';
 import 'package:path_provider_linux/path_provider_linux.dart';
 import 'package:path_provider_macos/path_provider_macos.dart';
@@ -21,6 +25,7 @@ class _PluginRegistrant {
   static void register() {
     if (Platform.isAndroid) {
       try {
+<<<<<<< HEAD
         GeolocatorAndroid.registerWith();
       } catch (err) {
         print(
@@ -31,6 +36,8 @@ class _PluginRegistrant {
       }
 
       try {
+=======
+>>>>>>> 2965ed0c845df75c4bcafcc895d81dc2572afad1
         PathProviderAndroid.registerWith();
       } catch (err) {
         print(
@@ -42,6 +49,7 @@ class _PluginRegistrant {
 
     } else if (Platform.isIOS) {
       try {
+<<<<<<< HEAD
         GeolocatorApple.registerWith();
       } catch (err) {
         print(
@@ -52,6 +60,8 @@ class _PluginRegistrant {
       }
 
       try {
+=======
+>>>>>>> 2965ed0c845df75c4bcafcc895d81dc2572afad1
         PathProviderIOS.registerWith();
       } catch (err) {
         print(
